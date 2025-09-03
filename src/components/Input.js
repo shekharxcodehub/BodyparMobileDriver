@@ -1,6 +1,7 @@
 import React from "react";
 import { TextInput, View, Text } from "react-native";
 import tw from "twrnc";
+import { colors } from "../theme/colors";
 
 export default function Input({ label, error, ...props }) {
   return (
@@ -9,11 +10,11 @@ export default function Input({ label, error, ...props }) {
       <TextInput
         style={tw.style(
           "border rounded-lg px-3 py-2",
-          error ? "border-red-500" : "border-gray-300"
+          error ? tw`border-[${colors.primary}]` : "border-gray-300"
         )}
         {...props}
       />
-      {error ? <Text style={tw`text-red-500 mt-1 text-sm`}>{error}</Text> : null}
+      {error ? <Text style={tw`text-[${colors.primary}] mt-1 text-sm`}>{error}</Text> : null}
     </View>
   );
 }

@@ -4,26 +4,27 @@ import Swiper from 'react-native-swiper';
 import tw from 'twrnc';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { colors } from '../theme/colors';
 
 const slides = [
   {
     id: 1,
-    title: 'Your Pharmacy, Delivered.',
-    text: 'Get medicines, health essentials, and more — right at your doorstep.',
+    title: 'Deliver Health. Make a Difference.',
+    text: 'Join a trusted network of drivers delivering essential medicines and care to people who need it.',
     button: 'Next',
     type: 'next'
   },
   {
     id: 2,
-    title: 'Speedy Delivery You Can Trust',
-    text: 'We deliver your medicines quickly, safely, and reliably — when you need them most.',
+    title: 'Earn on Your Schedule',
+    text: 'Choose your hours and earn steady income — all while making a real impact.',
     button: 'Next',
     type: 'next'
   },
   {
     id: 3,
-    title: 'Support That Never Sleeps',
-    text: 'Questions or concerns? Our pharmacy experts are here 24/7 for you.',
+    title: 'Smart, Simple Delivery App',
+    text: 'Track orders, navigate routes, and manage your deliveries — all from your phone.',
     button: 'Sign in',
     type: 'signin'
   }
@@ -43,7 +44,7 @@ export default function OnboardingScreen({ onComplete }) {
       ref={swiperRef}
       loop={false}
       dot={<View style={tw`w-5 h-0.5 bg-gray-300 rounded-full mx-1`} />}
-      activeDot={<View style={tw`w-5 h-0.5 bg-red-400 rounded-full mx-1`} />}
+      activeDot={<View style={tw`w-5 h-0.5 bg-[${colors.primary}] rounded-full mx-1`} />}
       paginationStyle={{
         bottom: 300, // Move dots up above the text section
       }}
@@ -76,7 +77,7 @@ export default function OnboardingScreen({ onComplete }) {
           {/* Buttons */}
           <View style={tw`px-8 mb-12`}>
             <TouchableOpacity
-              style={tw`bg-red-400 py-3 rounded-lg mb-4`}
+              style={tw`bg-[${colors.primary}] py-3 rounded-lg mb-4`}
               onPress={() => {
                 if (slide.type === 'next') {
                   swiperRef.current?.scrollBy(1);

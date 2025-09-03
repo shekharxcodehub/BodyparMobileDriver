@@ -4,10 +4,20 @@ import { useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import tw from "twrnc";
 import Header from "../components/Header";
+import { colors } from "../theme/colors";
 
 export default function PolicyScreen({ navigation }) {
   const route = useRoute();
   const { type } = route.params; // "terms" or "privacy"
+
+  const handleAccept = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      // If there's no previous screen in the stack, navigate to a default screen
+      navigation.navigate('MainTabs');
+    }
+  };
 
   const content = {
     terms: {
@@ -102,7 +112,7 @@ export default function PolicyScreen({ navigation }) {
       />
 
       {/* Content */}
-      <ScrollView contentContainerStyle={tw`p-4 pb-20`}>
+      <ScrollView contentContainerStyle={tw`p-4 pb-20`} showsVerticalScrollIndicator={false}>
         {page.sections.map((section, idx) => (
           <View key={idx} style={tw`mb-6`}>
             <Text style={tw`text-base font-semibold mb-1`}>{section.heading}</Text>
@@ -114,12 +124,8 @@ export default function PolicyScreen({ navigation }) {
       {/* Footer Button */}
       {/* <View style={tw`absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200`}>
         <TouchableOpacity
-          style={tw`bg-red-500 py-3 rounded-lg`}
-          onPress={() => {
-            // API call or action when accepted
-            console.log(`${page.title} accepted`);
-            navigation.goBack();
-          }}
+          style={tw`bg-[${colors.primary}] py-3 rounded-lg`}
+          onPress={handleAccept}
         >
           <Text style={tw`text-center text-white font-semibold`}>{page.buttonText}</Text>
         </TouchableOpacity>

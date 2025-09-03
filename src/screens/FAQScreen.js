@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { ChevronDown, ChevronUp } from "lucide-react-native"; // or use react-native-vector-icons
+import { ChevronDown, ChevronUp } from "lucide-react-native";
 import tw from "twrnc";
 import Header from "../components/Header";
+import { colors } from "../theme/colors";
 
 const faqs = [
   {
@@ -41,7 +42,7 @@ export default function FAQScreen({ navigation }) {
         showCart={false}
       />
 
-      <ScrollView style={tw`flex-1 bg-white p-4`}>
+      <ScrollView style={tw`flex-1 bg-white p-4`} showsVerticalScrollIndicator={false}>
         {faqs.map((item, index) => {
           const isActive = activeIndex === index;
           return (
@@ -50,26 +51,30 @@ export default function FAQScreen({ navigation }) {
               style={tw`mb-3 border border-gray-200 rounded-lg overflow-hidden`}
             >
               <TouchableOpacity
-                style={tw`flex-row justify-between items-center px-4 py-3 ${isActive ? "bg-red-50" : "bg-white"
-                  }`}
+                style={[tw`flex-row justify-between items-center px-4 py-3`,
+                { backgroundColor: isActive ? colors.state.active : colors.background }
+                ]}
                 onPress={() => toggle(index)}
               >
                 <Text
-                  style={tw`flex-1 ${isActive ? "text-red-500 font-semibold" : "text-black"
-                    }`}
+                  style={[tw`flex-1 font-medium`,
+                  { color: isActive ? colors.primary : colors.text.primary }
+                  ]}
                 >
                   {item.q}
                 </Text>
                 {isActive ? (
-                  <ChevronUp size={20} color={isActive ? "red" : "black"} />
+                  <ChevronUp size={20} color={isActive ? colors.primary : colors.text.primary} />
                 ) : (
-                  <ChevronDown size={20} color="black" />
+                  <ChevronDown size={20} color={colors.text.primary} />
                 )}
               </TouchableOpacity>
 
               {isActive && (
-                <View style={tw`px-4 py-3 bg-white border-t border-gray-200`}>
-                  <Text style={tw`text-gray-600`}>{item.a}</Text>
+                <View style={[tw`px-4 py-3 border-t`,
+                { backgroundColor: colors.background, borderColor: colors.border.light }
+                ]}>
+                  <Text style={{ color: colors.text.secondary }}>{item.a}</Text>
                 </View>
               )}
             </View>

@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, FlatList, TextInput } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import tw from 'twrnc';
-import BottomNavBar from '../components/BottomNavBar';
 import Swiper from 'react-native-swiper';
 import { AntDesign, FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import ProductCard from '../components/ProductCard';
+import { colors } from '../theme/colors';
 
 const banners = [
   require('../../assets/banner.png'),
@@ -20,75 +21,101 @@ const categories = [
 ];
 
 const topProducts = [
-  { id: '1', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/womens_libido.jpg') },
-  { id: '2', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/mens_libido.png') },
-  { id: '3', name: "Women's Libido, 90 Capsules", price: 'R349.00', image: require('../../assets/womens_libido_capsules.jpg') },
-  // Add more products
+  {
+    id: "1",
+    name: "Women's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/mens_libido.png'),
+  },
+  {
+    id: "2",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido.jpg'),
+  },
+  {
+    id: "3",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido_capsules.jpg'),
+  },
 ];
 
 const dealsOfTheDay = [
-  { id: '1', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/womens_libido.jpg') },
-  { id: '2', name: "Women's One Quick", price: 'R349.00', image: require('../../assets/mens_libido.png') },
-  { id: '3', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/womens_libido_capsules.jpg') },
-  // Add more deals
+  {
+    id: "1",
+    name: "Women's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/mens_libido.png'),
+  },
+  {
+    id: "2",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido.jpg'),
+  },
+  {
+    id: "3",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido_capsules.jpg'),
+  },
 ];
 
 const newLaunches = [
-  { id: '1', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/womens_libido.jpg') },
-  { id: '2', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/mens_libido.png') },
-  { id: '3', name: "Women's Libido Quick", price: 'R349.00', image: require('../../assets/womens_libido_capsules.jpg') },
-  // Add more new launches
+  {
+    id: "1",
+    name: "Women's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/mens_libido.png'),
+  },
+  {
+    id: "2",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido.jpg'),
+  },
+  {
+    id: "3",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido_capsules.jpg'),
+  },
 ];
 
 export default function HomeScreen({ navigation }) {
   const renderCategory = ({ item }) => (
     <TouchableOpacity style={tw`items-center mx-0`}>
-      <Image source={item.icon} style={tw`w-22 h-24 mb-2 mr-4 rounded-lg`} />
-      <Text style={tw`text-xs text-center`}>{item.name}</Text>
+      <Image source={item.icon} style={tw`w-28 h-28 mb-2 mr-3 rounded-lg`} />
+      <Text style={tw`text-sm text-center`}>{item.name}</Text>
     </TouchableOpacity>
-  );
-
-  const renderProduct = ({ item }) => (
-    <View style={[tw`bg-white rounded-lg p-2 mr-3`, { width: 150 }]}>
-      {/* Product Image */}
-      <View style={[tw`rounded-lg items-center justify-center mb-2`]}>
-        <Image
-          source={item.image}
-          style={[tw`w-32 h-32`]}
-          resizeMode="contain"
-        />
-      </View>
-
-      {/* Product Name */}
-      <Text style={tw`text-sm font-semibold my-2`} numberOfLines={2}>
-        {item.name}
-      </Text>
-
-      {/* Quantity */}
-      <Text style={tw`text-xs text-gray-500 mb-2`}>2 bottles</Text>
-
-      {/* Price Row */}
-      <View style={tw`flex-row items-center mb-2`}>
-        <Text style={tw`text-base font-bold text-black mr-2`}>{item.price}</Text>
-        <Text style={[tw`text-sm text-gray-400 line-through mr-2`]}>R499</Text>
-        <Text style={tw`text-sm text-green-600`}>5%</Text>
-      </View>
-
-      {/* Action Row */}
-      <View style={tw`flex-row items-center`}>
-        <TouchableOpacity
-          style={[tw`rounded-lg border border-gray-300 items-center justify-center mr-2`, { width: 40, height: 40 }]}
-        >
-          <MaterialCommunityIcons name="heart-plus" size={24} color="#FF6B6B" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[tw`flex-1 bg-red-400 rounded-lg items-center justify-center`, { height: 40 }]}
-        >
-          <Text style={tw`text-white text-sm font-medium`}>Add to Cart</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
   );
 
   return (
@@ -96,7 +123,7 @@ export default function HomeScreen({ navigation }) {
       {/* Curved Header */}
       <View style={{ position: 'relative', height: 200 }}>
         {/* Background color */}
-        <View style={[tw`absolute w-full bg-red-400 rounded-b-3xl`, { height: 190 }]} />
+        <View style={[tw`absolute w-full bg-[${colors.primary}] rounded-b-3xl`, { height: 190 }]} />
 
         {/* Curved SVG overlay */}
         <Svg
@@ -112,9 +139,9 @@ export default function HomeScreen({ navigation }) {
         </Svg>
 
         {/* Header content */}
-        <View style={tw`absolute w-full px-4 pt-6`}>
+        <View style={tw`absolute w-full px-4 pt-0`}>
           {/* Location + Cart Row */}
-          <View style={tw`flex-row justify-between items-center py-6`}>
+          <View style={tw`flex-row justify-between items-center py-6 pb-10`}>
             <View>
               <Text style={tw`text-white font-semibold`}>Your location</Text>
               <Text style={tw`text-white`} numberOfLines={1}>
@@ -122,17 +149,18 @@ export default function HomeScreen({ navigation }) {
               </Text>
             </View>
             <TouchableOpacity>
-              <FontAwesome name="shopping-cart" size={24} color="white" />
+              <FontAwesome name="shopping-cart" onPress={() => navigation.navigate("CartScreen")} size={24} color="white" />
             </TouchableOpacity>
           </View>
 
           {/* Search Bar */}
-          <View style={[tw`bg-white rounded-lg flex-row items-center px-4 mt-4`, { height: 45, shadowColor: '#000', shadowOpacity: 0.1, shadowOffset: { width: 0, height: 2 }, shadowRadius: 4, elevation: 3 }]}>
+          <View style={[tw`bg-white rounded-lg flex-row items-center px-4 mt-4`, { height: 45, shadowOpacity: 0.1, shadowOffset: { width: 0, height: 2 }, shadowRadius: 4, elevation: 3 }]}>
             <AntDesign name="search1" size={18} color="black" />
             <TextInput
               placeholder="Search..."
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor="gray"
               style={tw`ml-2 flex-1`}
+              onPress={() => navigation.navigate("SearchScreen")}
             />
           </View>
         </View>
@@ -177,19 +205,30 @@ export default function HomeScreen({ navigation }) {
           <View style={tw`mb-6`}>
             <View style={tw`flex-row justify-between items-center mb-4`}>
               <Text style={tw`text-lg font-bold`}>Top Products</Text>
-              <Text style={tw`text-red-500`} onPress={() => navigation.navigate("ProductListingScreen", { categoryId: "all" })}>View all</Text>
+              <Text style={tw`text-[${colors.primary}]`} onPress={() => navigation.navigate("ProductListingScreen", { categoryId: "all" })}>View all</Text>
             </View>
             <FlatList
               data={topProducts}
-              renderItem={renderProduct}
               keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <ProductCard
+                  border={false}
+                  product={item}
+                  onPress={() =>
+                    navigation.navigate("ProductDetailsScreen", { product: item })
+                  }
+                  onAddToCart={() => console.log("Add to cart:", item.id)}
+                  onAddToWishlist={() => console.log("Wishlist:", item.id)}
+                  style={{ width: 150, marginRight: 12 }}
+                />
+              )}
             />
           </View>
 
           {/* Chat with Pharmacist */}
-          <View style={tw`flex-row items-center bg-[#FE6D73] bg-opacity-30 px-4 py-6 rounded-lg mb-4`}>
+          <View style={tw`flex-row items-center bg-[${colors.primary}] bg-opacity-30 px-4 py-6 rounded-lg mb-4`}>
             {/* Left Side - Text */}
             <View style={tw`flex-1`}>
               <Text style={tw`text-gray-600 text-xs mb-1`}>
@@ -206,50 +245,69 @@ export default function HomeScreen({ navigation }) {
               style={tw`flex-row items-center border border-black rounded-lg px-4 py-2`}
             >
               <Ionicons name="chatbubble-outline" size={16} color="black" style={tw`mr-2`} />
-              <Text style={tw`text-black font-medium`}>Chat now</Text>
+              <Text style={tw`text-black font-medium`} onPress={() => navigation.navigate("ChatScreen")}>Chat now</Text>
             </TouchableOpacity>
           </View>
 
           {/* Border */}
-          <View style={tw`border-b-4 border-gray-200 mb-6`} />
+          <View style={tw`border-b-2 border-gray-200 mb-6`} />
 
           {/* Deals of the Day */}
           <View style={tw`mb-6`}>
             <View style={tw`flex-row justify-between items-center mb-2`}>
               <Text style={tw`text-lg font-bold`}>Deals of the Day</Text>
-              <Text style={tw`text-red-500`}>View all</Text>
+              <Text style={tw`text-[${colors.primary}]`} onPress={() => navigation.navigate("ProductListingScreen", { categoryId: "all" })}>View all</Text>
             </View>
             <FlatList
               data={dealsOfTheDay}
-              renderItem={renderProduct}
               keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <ProductCard
+                  border={false}
+                  product={item}
+                  onPress={() =>
+                    navigation.navigate("ProductDetailsScreen", { product: item })
+                  }
+                  onAddToCart={() => console.log("Add to cart:", item.id)}
+                  onAddToWishlist={() => console.log("Wishlist:", item.id)}
+                  style={{ width: 150, marginRight: 12 }}
+                />
+              )}
             />
           </View>
 
           {/* Border */}
-          <View style={tw`border-b-4 border-gray-200 mb-6`} />
+          <View style={tw`border-b-2 border-gray-200 mb-6`} />
 
           {/* New Launches */}
           <View style={tw`mb-6`}>
             <View style={tw`flex-row justify-between items-center mb-2`}>
               <Text style={tw`text-lg font-bold`}>New Launches</Text>
-              <Text style={tw`text-red-500`}>View all</Text>
+              <Text style={tw`text-[${colors.primary}]`} onPress={() => navigation.navigate("ProductListingScreen", { categoryId: "all" })}>View all</Text>
             </View>
             <FlatList
               data={newLaunches}
-              renderItem={renderProduct}
               keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <ProductCard
+                  border={false}
+                  product={item}
+                  onPress={() =>
+                    navigation.navigate("ProductDetailsScreen", { product: item })
+                  }
+                  onAddToCart={() => console.log("Add to cart:", item.id)}
+                  onAddToWishlist={() => console.log("Wishlist:", item.id)}
+                  style={{ width: 150, marginRight: 12 }}
+                />
+              )}
             />
           </View>
         </ScrollView>
       </View>
-
-      {/* Bottom Navigation */}
-      {/* <BottomNavBar /> */}
     </View >
   );
 }

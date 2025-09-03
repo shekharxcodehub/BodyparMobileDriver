@@ -19,6 +19,7 @@ import tw from "twrnc";
 import BottomNavBar from "../components/BottomNavBar";
 import Header from "../components/Header";
 import GlobalPopup from "../components/GlobalPopup";
+import { colors } from "../theme/colors";
 const ProfileBanner = require("../../assets/profile_banner.png");
 const UserProfile = require("../../assets/user1.jpg");
 
@@ -47,7 +48,7 @@ const ProfileScreen = ({ navigation }) => {
       icon: <FontAwesome5 name="map-marker-alt" size={20} color="black" />,
       title: "Saved address",
       subtitle: "Your saved addresses",
-      onPress: () => { },
+      onPress: () => navigation.navigate("SavedAddressesScreen"),
     },
     // {
     //   icon: <Feather name="headphones" size={22} color="black" />,
@@ -98,7 +99,7 @@ const ProfileScreen = ({ navigation }) => {
         showCart={false}
       />
 
-      <ScrollView contentContainerStyle={tw`pt-0 pb-28`}>
+      <ScrollView contentContainerStyle={tw`pt-0 pb-28`} showsVerticalScrollIndicator={false}>
         {/* Top Banner */}
         <ImageBackground
           source={ProfileBanner}
@@ -126,9 +127,10 @@ const ProfileScreen = ({ navigation }) => {
             Thabo Mokoena
           </Text>
           <TouchableOpacity
-            style={tw`bg-red-400 px-4 py-2 rounded-lg mt-2`}
-            onPress={() => { }}
+            style={tw`bg-[${colors.primary}] px-4 py-2 rounded-lg mt-2 flex-row items-center justify-center`}
+            onPress={() => navigation.navigate("EditProfileScreen")}
           >
+            <MaterialIcons name="edit" size={16} color="white" style={tw`mr-2`} />
             <Text style={tw`text-white font-medium`}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
@@ -143,7 +145,7 @@ const ProfileScreen = ({ navigation }) => {
             >
               <View style={tw`mr-3`}>{item.icon}</View>
               <View style={tw`flex-1`}>
-                <Text style={[tw`text-base font-medium`, item.titleStyle ? tw`text-red-500` : tw`text-gray-900`]}>
+                <Text style={[tw`text-base font-medium`, item.titleStyle ? tw`text-[${colors.primary}]` : tw`text-gray-900`]}>
                   {item.title}
                 </Text>
                 <Text style={tw`text-xs text-gray-500`}>{item.subtitle}</Text>
@@ -156,7 +158,7 @@ const ProfileScreen = ({ navigation }) => {
         {/* Logout Button */}
         <View style={tw`px-4 mt-2`}>
           <TouchableOpacity
-            style={tw`border border-red-400 p-4 rounded-lg flex-row items-center justify-center`}
+            style={tw`border border-[${colors.primary}] p-4 rounded-lg flex-row items-center justify-center`}
             onPress={() => setPopupVisible(true)}
           >
             <Ionicons
@@ -165,7 +167,7 @@ const ProfileScreen = ({ navigation }) => {
               color="red"
               style={tw`mr-2`}
             />
-            <Text style={tw`text-red-500 font-medium`}>Log out</Text>
+            <Text style={tw`text-[${colors.primary}] font-medium`}>Log out</Text>
           </TouchableOpacity>
         </View>
 

@@ -1,19 +1,52 @@
-import React, { useRef, useState } from "react";
-import { View, Text, Switch, TouchableOpacity } from "react-native";
-import CustomBottomSheet from "../components/CustomBottomSheet";
+import React, { useRef, useState, useCallback } from "react";
+import { View, Text, Switch, TouchableOpacity, Alert } from "react-native";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import Header from "../components/Header";
 import tw from "twrnc";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
+import { DeleteAccountBottomSheet } from "../components/bottomSheets/DeleteAccountBottomSheet";
+import { colors } from "../theme/colors";
 
 export default function SettingsScreen({ navigation }) {
-  const bottomSheetRef = useRef(null);
-  const [step, setStep] = useState(1);
+  const deleteAccountSheetRef = useRef(null);
   const [whatsappNotif, setWhatsappNotif] = useState(false);
 
-  const openDeleteSheet = () => {
-    setStep(1);
-    bottomSheetRef.current?.snapToIndex(1);
-  };
+  // Log when the ref changes
+  React.useEffect(() => {
+  }, [deleteAccountSheetRef.current]);
+
+  const handleSheetChanges = useCallback((index) => {
+    // If index is -1, the sheet is dismissed
+    if (index === -1) {
+      console.log('Bottom sheet was dismissed');
+    }
+  }, []);
+
+  const openDeleteSheet = useCallback(() => {
+    // Small delay to ensure ref is set
+    setTimeout(() => {
+      if (deleteAccountSheetRef.current) {
+        deleteAccountSheetRef.current.present();
+      } else {
+        console.error('Bottom sheet ref is not available');
+      }
+    }, 100);
+  }, []);
+
+  const handleDeleteAccount = useCallback(() => {
+    Alert.alert(
+      "Account Deletion",
+      "Your account has been scheduled for deletion.",
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            deleteAccountSheetRef.current?.dismiss();
+          }
+        }
+      ]
+    );
+  }, []);
 
   return (
     <View style={tw`flex-1 bg-white`}>
@@ -44,19 +77,13 @@ export default function SettingsScreen({ navigation }) {
           onPress={openDeleteSheet}
         >
           <AntDesign name="delete" size={20} color="red" style={tw`mr-3`} />
-          <Text style={tw`text-red-600 font-bold`}>Delete Account</Text>
+          <Text style={tw`text-[${colors.primary}] font-bold`}>Delete Account</Text>
         </TouchableOpacity>
 
-        {/* Bottom Sheet */}
-        <CustomBottomSheet
-          ref={bottomSheetRef}
-          step={step}
-          onContinue={() => setStep(2)}
-          onDelete={() => {
-            console.log("API Call: Delete Account");
-            bottomSheetRef.current?.close();
-          }}
-          onClose={() => bottomSheetRef.current?.close()}
+        {/* Delete Account Bottom Sheet */}
+        <DeleteAccountBottomSheet
+          ref={deleteAccountSheetRef}
+          onDelete={handleDeleteAccount}
         />
       </View>
     </View>

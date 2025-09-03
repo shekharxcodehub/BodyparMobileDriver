@@ -4,6 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, Alert, ActivityIndicato
 import Svg, { Path } from 'react-native-svg';
 import tw from 'twrnc';
 import auth from '../services/auth';
+import { colors } from '../theme/colors';
 
 export default function LoginScreen({ navigation }) {
   const { signIn } = useContext(AuthContext);
@@ -35,7 +36,7 @@ export default function LoginScreen({ navigation }) {
     <View style={tw`flex-1 bg-gray-50`}>
       {/* Curved Header */}
       <View style={{ position: 'relative', height: 250 }}>
-        <View style={[tw`absolute w-full bg-red-400`, { height: 250 }]} />
+        <View style={[tw`absolute w-full bg-[${colors.primary}]`, { height: 250 }]} />
         <Svg height="200" width="100%" viewBox="0 0 400 200" style={{ position: 'absolute', top: 0 }}>
           <Path d="M0 0 H400 V140 Q200 200 0 140 Z" fill="#f87171" />
         </Svg>
@@ -78,7 +79,7 @@ export default function LoginScreen({ navigation }) {
 
           <TouchableOpacity
             onPress={handleLogin}
-            style={tw`bg-red-400 py-3 rounded-lg mb-4 flex-row justify-center items-center`}
+            style={tw`bg-[${colors.primary}] py-3 rounded-lg mb-4 flex-row justify-center items-center`}
             disabled={loading}
           >
             {loading ? (
@@ -88,7 +89,7 @@ export default function LoginScreen({ navigation }) {
             )}
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate("PhoneLoginScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate('Auth', { screen: 'PhoneLogin' })}>
             <Text style={tw`text-center text-sm underline font-bold text-gray-900 mb-6`}>
               Login with Phone number instead
             </Text>
@@ -116,7 +117,7 @@ export default function LoginScreen({ navigation }) {
         <View style={tw`pb-12`}>
           <Text style={tw`text-center text-sm text-gray-600`}>
             don't have an account?{' '}
-            <Text style={tw`text-black font-bold`} onPress={() => navigation.navigate("SignUpScreen")}>
+            <Text style={tw`text-black font-bold`} onPress={() => navigation.navigate('Auth', { screen: 'SignUp' })}>
               Register
             </Text>
           </Text>

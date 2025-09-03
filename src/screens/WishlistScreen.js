@@ -4,10 +4,64 @@ import tw from "twrnc";
 import { Ionicons } from "@expo/vector-icons";
 import BottomNavBar from "../components/BottomNavBar";
 import Header from "../components/Header"; // ✅ use new Header
+import ProductCard from "../components/ProductCard";
+import { colors } from "../theme/colors";
 
 const wishlistItems = [
-  { id: "1", name: "Women's Libido, 60 Quick Release Capsules", price: "R120", oldPrice: "R140", discount: "5%", quantity: "2 bottles", image: require("../../assets/womens_libido.jpg") },
-  { id: "2", name: "Men's Vitality, 90 Capsules", price: "R180", oldPrice: "R200", discount: "10%", quantity: "1 bottle", image: require("../../assets/womens_libido.jpg") },
+  {
+    id: "1",
+    name: "Women's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/mens_libido.png'),
+  },
+  {
+    id: "2",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido.jpg'),
+  },
+  {
+    id: "3",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido_capsules.jpg'),
+  },
+  {
+    id: "1",
+    name: "Women's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/mens_libido.png'),
+  },
+  {
+    id: "2",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido.jpg'),
+  },
+  {
+    id: "3",
+    name: "Men's Libido, 60 Quick Release Capsules",
+    qty: "2 bottles",
+    price: "R120",
+    oldPrice: "R140",
+    discount: "5%",
+    image: require('../../assets/womens_libido_capsules.jpg'),
+  },
 ];
 
 export default function WishlistScreen({ navigation }) {
@@ -21,7 +75,7 @@ export default function WishlistScreen({ navigation }) {
         <Text style={tw`text-sm text-gray-400 line-through mr-2`}>{item.oldPrice}</Text>
         <Text style={tw`text-sm text-green-600`}>{item.discount}</Text>
       </View>
-      <TouchableOpacity style={[tw`flex-row items-center justify-center bg-red-400 rounded-lg`, { height: 36 }]}>
+      <TouchableOpacity style={[tw`flex-row items-center justify-center bg-[${colors.primary}] rounded-lg`, { height: 36 }]}>
         <Ionicons name="cart-outline" size={18} color="white" style={tw`mr-2`} />
         <Text style={tw`text-white text-sm font-medium`}>Add to Cart</Text>
       </TouchableOpacity>
@@ -43,15 +97,24 @@ export default function WishlistScreen({ navigation }) {
       {/* Wishlist Grid */}
       <FlatList
         data={wishlistItems}
-        renderItem={renderWishlistItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={tw`p-3`}
         showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <View style={tw`flex-1 p-2`}>
+            <ProductCard
+              border={true}
+              product={item}
+              onPress={() =>
+                navigation.navigate("ProductDetailsScreen", { product: item })
+              }
+              onAddToCart={() => console.log("Add to cart:", item.id)}
+              onAddToWishlist={() => console.log("Wishlist:", item.id)}
+            />
+          </View>
+        )}
       />
-
-      {/* Bottom Nav */}
-      {/* <BottomNavBar /> */}
     </View>
   );
 }

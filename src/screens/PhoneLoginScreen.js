@@ -5,6 +5,7 @@ import Svg, { Path } from 'react-native-svg';
 import tw from 'twrnc';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { colors } from '../theme/colors';
 
 const countries = [
   { label: '🇿🇦 +27', value: '+27' },
@@ -30,14 +31,14 @@ export default function PhoneLoginScreen({ navigation }) {
       validationSchema={validationSchema}
       onSubmit={(values) => {
         // For static design, navigate to OTP screen
-        navigation.navigate('OtpVerificationScreen');
+        navigation.navigate('Auth', { screen: 'OtpVerification' });
       }}
     >
       {({ handleChange, handleSubmit, values, errors, touched, setFieldValue }) => (
         <View style={tw`flex-1 bg-white`}>
           {/* Curved Header */}
           <View style={{ position: 'relative', height: 250 }}>
-            <View style={[tw`absolute w-full bg-red-400`, { height: 250 }]} />
+            <View style={[tw`absolute w-full bg-[${colors.primary}]`, { height: 250 }]} />
             <Svg
               height="200"
               width="100%"
@@ -92,20 +93,20 @@ export default function PhoneLoginScreen({ navigation }) {
 
               {/* Error messages */}
               {touched.countryCode && errors.countryCode ? (
-                <Text style={tw`text-red-500 text-sm`}>{errors.countryCode}</Text>
+                <Text style={tw`text-[${colors.primary}] text-sm`}>{errors.countryCode}</Text>
               ) : null}
               {touched.phone && errors.phone ? (
-                <Text style={tw`text-red-500 text-sm`}>{errors.phone}</Text>
+                <Text style={tw`text-[${colors.primary}] text-sm`}>{errors.phone}</Text>
               ) : null}
 
               <TouchableOpacity
-                style={tw`bg-red-400 py-3 rounded-lg mb-4 mt-4`}
+                style={tw`bg-[${colors.primary}] py-3 rounded-lg mb-4 mt-4`}
                 onPress={handleSubmit}
               >
                 <Text style={tw`text-white text-center font-semibold`}>Send OTP</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
                 <Text style={tw`text-center text-sm underline font-bold text-gray-900`}>
                   Login with Email instead
                 </Text>
@@ -150,7 +151,7 @@ export default function PhoneLoginScreen({ navigation }) {
                 don't have an account?{' '}
                 <Text
                   style={tw`text-black font-bold`}
-                  onPress={() => navigation.navigate('SignUpScreen')}
+                  onPress={() => navigation.navigate('Auth', { screen: 'SignUp' })}
                 >
                   Register
                 </Text>

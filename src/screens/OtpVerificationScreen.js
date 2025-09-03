@@ -4,6 +4,7 @@ import Svg, { Path } from 'react-native-svg';
 import tw from 'twrnc';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { colors } from '../theme/colors';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
@@ -31,14 +32,14 @@ export default function OtpVerificationScreen({ navigation }) {
       validationSchema={validationSchema}
       onSubmit={() => {
         // For static design, navigate to Home screen
-        navigation.navigate("HomeScreen");
+        navigation.navigate('Auth', { screen: 'HomeScreen' });
       }}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
         <View style={tw`flex-1 bg-white`}>
           {/* Curved Header */}
           <View style={{ position: 'relative', height: 250 }}>
-            <View style={[tw`absolute w-full bg-red-400`, { height: 250 }]} />
+            <View style={[tw`absolute w-full bg-[${colors.primary}]`, { height: 250 }]} />
             <Svg
               height="200"
               width="100%"
@@ -92,13 +93,13 @@ export default function OtpVerificationScreen({ navigation }) {
               {/* General error message for all fields */}
               {(touched.otp1 || touched.otp2 || touched.otp3 || touched.otp4) &&
                 (errors.otp1 || errors.otp2 || errors.otp3 || errors.otp4) ? (
-                <Text style={tw`text-red-500 text-sm mb-4 text-center`}>
+                <Text style={tw`text-[${colors.primary}] text-sm mb-4 text-center`}>
                   Please fill all OTP fields with valid digits
                 </Text>
               ) : null}
 
               <TouchableOpacity
-                style={tw`bg-red-400 py-3 rounded-lg mt-4`}
+                style={tw`bg-[${colors.primary}] py-3 rounded-lg mt-4`}
                 onPress={handleSubmit}
               >
                 <Text style={tw`text-white text-center font-semibold`}>Login</Text>

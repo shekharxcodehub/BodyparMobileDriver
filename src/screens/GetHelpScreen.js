@@ -12,7 +12,7 @@ export default function GetHelpScreen({ navigation }) {
       subtitle: "Connect with our agent to solve any queries",
       icon: <Ionicons name="chatbubble-ellipses-outline" size={22} color="#FF3B30" />,
       titleStyle: { color: "#FF3B30" },
-      onPress: () => console.log("Live Chat"),
+      onPress: () => navigation.navigate("ChatScreen"),
     },
     {
       title: "Chat on whatsapp",
@@ -22,10 +22,10 @@ export default function GetHelpScreen({ navigation }) {
       onPress: () => console.log("WhatsApp"),
     },
     {
-      title: "FAQ",
+      icon: <Ionicons name="help-circle-outline" size={22} color="black" />,
+      title: "FAQs",
       subtitle: "Get answers to frequently asked questions",
-      icon: <Ionicons name="help-circle-outline" size={22} color="#000" />,
-      onPress: () => console.log("FAQ"),
+      onPress: () => navigation.navigate("FAQScreen"),
     },
     {
       title: "Email us",
@@ -43,7 +43,7 @@ export default function GetHelpScreen({ navigation }) {
       title: "Suggestions and feedbacks",
       subtitle: "We would love to hear back from you",
       icon: <Feather name="star" size={22} color="#000" />,
-      onPress: () => console.log("Feedback"),
+      onPress: () => navigation.navigate("ReviewScreen"),
     },
   ];
 
@@ -54,12 +54,13 @@ export default function GetHelpScreen({ navigation }) {
         navigation={navigation}
         title={"Help Center"}
         showBack={true}
-        showSearch={false}
-        showCart={false}
+        showSearch={true}
+        showCart={true}
+        cartCount={3}
       />
 
       {/* Body */}
-      <ScrollView contentContainerStyle={tw`p-4`}>
+      <ScrollView contentContainerStyle={tw`p-4`} showsVerticalScrollIndicator={false}>
         {options.map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -74,9 +75,6 @@ export default function GetHelpScreen({ navigation }) {
           </TouchableOpacity>
         ))}
       </ScrollView>
-
-      {/* Bottom Nav */}
-      {/* <BottomNavBar /> */}
     </View>
   );
 }

@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import Svg, { Path } from 'react-native-svg';
 import tw from 'twrnc';
+import { colors } from '../theme/colors';
 
 export default function SignUpScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -15,7 +16,7 @@ export default function SignUpScreen({ navigation }) {
       {/* Curved Header */}
       <View style={{ position: 'relative', height: 250 }}>
         {/* Background color */}
-        <View style={[tw`absolute w-full bg-red-400`, { height: 250 }]} />
+        <View style={[tw`absolute w-full bg-[${colors.primary}]`, { height: 250 }]} />
 
         {/* Curved SVG overlay */}
         <Svg
@@ -53,7 +54,7 @@ export default function SignUpScreen({ navigation }) {
           <TextInput placeholder="E-mail Address" value={email} onChangeText={setEmail} style={tw`border border-gray-300 rounded-lg px-4 py-3 mb-4`} />
           <TextInput placeholder="Create password" secureTextEntry value={password} onChangeText={setPassword} style={tw`border border-gray-300 rounded-lg px-4 py-3 mb-4`} />
 
-          <TouchableOpacity style={tw`bg-red-400 py-3 rounded-lg mb-4`}>
+          <TouchableOpacity style={tw`bg-[${colors.primary}] py-3 rounded-lg mb-4`}>
             <Text style={tw`text-white text-center font-semibold`}>Register</Text>
           </TouchableOpacity>
 
@@ -95,7 +96,7 @@ export default function SignUpScreen({ navigation }) {
             already have an account?{' '}
             <Text
               style={tw`text-black font-bold`}
-              onPress={() => navigation.navigate("LoginScreen")}
+              onPress={() => navigation.navigate('Auth', { screen: 'Login' })}
             >
               Login
             </Text>

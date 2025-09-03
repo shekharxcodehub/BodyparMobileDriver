@@ -12,6 +12,8 @@ import { FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@
 import tw from "twrnc";
 import Header from "../components/Header";
 import Carousel from "react-native-reanimated-carousel";
+import ProductCard from "../components/ProductCard";
+import { colors } from "../theme/colors";
 
 const { width } = Dimensions.get("window");
 
@@ -52,6 +54,15 @@ const similarProducts = [
     oldPrice: "R220",
     discount: "10%",
     image: require("../../assets/mens_libido.png"),
+  },
+  {
+    id: "3",
+    name: "Premium Libido, 60 Capsules",
+    qty: "1 bottle",
+    price: "R180",
+    oldPrice: "R220",
+    discount: "10%",
+    image: require("../../assets/womens_libido_capsules.jpg"),
   },
 ];
 
@@ -98,8 +109,9 @@ export default function ProductDetailsScreen({ navigation }) {
         navigation={navigation}
         title={""}
         showBack={true}
-        showSearch={false}
+        showSearch={true}
         showCart={true}
+        cartCount={3}
       />
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -172,7 +184,7 @@ export default function ProductDetailsScreen({ navigation }) {
                 <Text style={tw`text-green-600 text-sm`}>{product.discount}</Text>
               </View>
 
-              <TouchableOpacity style={tw`bg-[#FE6D73] px-5 py-2 rounded-lg`}>
+              <TouchableOpacity style={tw`bg-[${colors.primary}] px-5 py-2 rounded-lg`}>
                 <Text style={tw`text-white font-medium`}>Add to cart</Text>
               </TouchableOpacity>
             </View>
@@ -180,7 +192,7 @@ export default function ProductDetailsScreen({ navigation }) {
 
           {/* Delivery Info */}
           <View style={tw`-mx-4 mb-4`}>
-            <View style={tw`bg-red-100 p-4 flex-row items-center w-full`}>
+            <View style={tw`bg-[${colors.primary}] bg-opacity-30 p-4 flex-row items-center w-full`}>
               <MaterialCommunityIcons
                 name="truck-delivery-outline"
                 size={20}
@@ -270,7 +282,7 @@ export default function ProductDetailsScreen({ navigation }) {
           </View>
         ))}
 
-        <View style={tw`bg-red-400 flex-row justify-around items-center py-4 my-6`}>
+        <View style={tw`bg-[${colors.primary}] flex-row justify-around items-center py-4 my-6`}>
           {/* Free Delivery */}
           <View style={tw`flex-row items-center`}>
             <MaterialIcons name="local-shipping" size={28} color="white" />
@@ -292,18 +304,28 @@ export default function ProductDetailsScreen({ navigation }) {
         </View>
 
         {/* Similar Products */}
-        <View style={tw`mt-5`}>
-          <View style={tw`flex-row justify-between items-center px-4 mb-2`}>
+        <View style={tw`px-4 mb-6`}>
+          <View style={tw`flex-row justify-between items-center mb-2`}>
             <Text style={tw`text-lg font-bold`}>Similar Products</Text>
-            <Text style={tw`text-sm text-[#FE6D73]`}>View all</Text>
+            <Text style={tw`text-[${colors.primary}]`} onPress={() => navigation.navigate("ProductListingScreen", { categoryId: "all" })}>View all</Text>
           </View>
           <FlatList
             data={similarProducts}
-            renderItem={renderProduct}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            contentContainerStyle={tw`px-2`}
-            scrollEnabled={false}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <ProductCard
+                border={false}
+                product={item}
+                onPress={() =>
+                  navigation.navigate("ProductDetailsScreen", { product: item })
+                }
+                onAddToCart={() => console.log("Add to cart:", item.id)}
+                onAddToWishlist={() => console.log("Wishlist:", item.id)}
+                style={{ width: 150, marginRight: 12 }}
+              />
+            )}
           />
         </View>
 
@@ -311,18 +333,28 @@ export default function ProductDetailsScreen({ navigation }) {
         <View style={tw`border-b-2 border-gray-200 my-4`} />
 
         {/* Frequently bought together Products */}
-        <View style={tw`my-5`}>
-          <View style={tw`flex-row justify-between items-center px-4 mb-2`}>
+        <View style={tw`px-4 mb-6`}>
+          <View style={tw`flex-row justify-between items-center mb-2`}>
             <Text style={tw`text-lg font-bold`}>Frequently bought together</Text>
-            <Text style={tw`text-sm text-[#FE6D73]`}>View all</Text>
+            <Text style={tw`text-[${colors.primary}]`} onPress={() => navigation.navigate("ProductListingScreen", { categoryId: "all" })}>View all</Text>
           </View>
           <FlatList
             data={similarProducts}
-            renderItem={renderProduct}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            contentContainerStyle={tw`px-2`}
-            scrollEnabled={false}
+            keyExtractor={(item, index) => `${item.id}-${index}`}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <ProductCard
+                border={false}
+                product={item}
+                onPress={() =>
+                  navigation.navigate("ProductDetailsScreen", { product: item })
+                }
+                onAddToCart={() => console.log("Add to cart:", item.id)}
+                onAddToWishlist={() => console.log("Wishlist:", item.id)}
+                style={{ width: 150, marginRight: 12 }}
+              />
+            )}
           />
         </View>
       </ScrollView>

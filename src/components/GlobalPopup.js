@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Modal, TouchableOpacity } from "react-native";
 import tw from "twrnc";
+import { colors } from "../theme/colors";
 
 const GlobalPopup = ({
   visible,
@@ -26,14 +27,14 @@ const GlobalPopup = ({
           {/* Buttons */}
           <View style={tw`flex-row justify-between`}>
             <TouchableOpacity
-              style={tw`border border-red-400 rounded-lg px-12 py-3`}
+              style={tw`border border-[${colors.primary}] rounded-lg px-12 py-3`}
               onPress={onCancel}
             >
-              <Text style={tw`text-red-500 font-semibold`}>Cancel</Text>
+              <Text style={tw`text-[${colors.primary}] font-semibold`}>Cancel</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={tw`bg-red-400 rounded-lg px-12 py-3`}
+              style={tw`bg-[${colors.primary}] rounded-lg px-12 py-3`}
               onPress={onConfirm}
             >
               <Text style={tw`text-white font-semibold`}>Confirm</Text>
