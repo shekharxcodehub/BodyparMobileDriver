@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, { useContext, useRef, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import tw from 'twrnc';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { colors } from '../theme/colors';
+import auth from '../services/auth';
+import AuthContext from '../context/AuthContext';
 
 // Yup validation schema
 const validationSchema = Yup.object().shape({
@@ -23,6 +25,9 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function OtpVerificationScreen({ navigation }) {
+  const { signIn } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+
   // Create refs for each TextInput
   const inputRefs = useRef([React.createRef(), React.createRef(), React.createRef(), React.createRef()]);
 
@@ -30,9 +35,26 @@ export default function OtpVerificationScreen({ navigation }) {
     <Formik
       initialValues={{ otp1: '', otp2: '', otp3: '', otp4: '' }}
       validationSchema={validationSchema}
-      onSubmit={() => {
-        // For static design, navigate to Home screen
-        navigation.navigate('Auth', { screen: 'HomeScreen' });
+      onSubmit={async (values) => {
+        const otp = values.otp1 + values.otp2 + values.otp3 + values.otp4;
+
+        try {
+          setLoading(true);
+
+          // Call the auth service with mobile + otp
+          const res = await auth.verifyOtp("9876543210", otp);
+
+          // Save token
+          await signIn(res.token);
+
+        } catch (err) {
+          console.error('Login error:', err);
+          Alert.alert('Login Failed', err.message || 'An error occurred during login');
+        } finally {
+          setLoading(false);
+        }
+
+        navigation.navigate('Auth', { screen: 'VerificationStatusScreen' });
       }}
     >
       {({ handleChange, handleSubmit, values, errors, touched }) => (
@@ -74,15 +96,19 @@ export default function OtpVerificationScreen({ navigation }) {
                       value={values[field]}
                       onChangeText={(text) => {
                         handleChange(field)(text);
-                        // Auto-advance to next field if a digit is entered
+
                         if (text && /^\d$/.test(text) && i < 3) {
                           inputRefs.current[i + 1].current.focus();
                         }
                       }}
                       onKeyPress={({ nativeEvent: { key } }) => {
-                        // Move to previous field on backspace if field is empty
-                        if (key === 'Backspace' && !values[field] && i > 0) {
-                          inputRefs.current[i - 1].current.focus();
+                        if (key === 'Backspace') {
+                          if (values[field]) {
+                            handleChange(field)('');
+                          } else if (i > 0) {
+                            inputRefs.current[i - 1].current.focus();
+                            handleChange(['otp1', 'otp2', 'otp3', 'otp4'][i - 1])('');
+                          }
                         }
                       }}
                     />

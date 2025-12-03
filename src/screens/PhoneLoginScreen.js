@@ -106,11 +106,11 @@ export default function PhoneLoginScreen({ navigation }) {
                 <Text style={tw`text-white text-center font-semibold`}>Send OTP</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
+              {/* <TouchableOpacity onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
                 <Text style={tw`text-center text-sm underline font-bold text-gray-900`}>
                   Login with Email instead
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               {/* Divider */}
               <View style={tw`flex-row items-center my-6`}>
@@ -146,7 +146,7 @@ export default function PhoneLoginScreen({ navigation }) {
             </View>
 
             {/* Bottom Register Link */}
-            <View style={tw`pb-12`}>
+            {/* <View style={tw`pb-12`}>
               <Text style={tw`text-center text-sm text-gray-600`}>
                 don't have an account?{' '}
                 <Text
@@ -156,7 +156,7 @@ export default function PhoneLoginScreen({ navigation }) {
                   Register
                 </Text>
               </Text>
-            </View>
+            </View> */}
           </View>
         </View>
       )}

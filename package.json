@@ -19,6 +19,7 @@
         "@react-navigation/native-stack": "^7.3.24",
         "@react-navigation/stack": "^7.4.7",
         "expo": "53.0.22",
+        "expo-image-picker": "^17.0.8",
         "expo-status-bar": "~2.2.3",
         "formik": "^2.4.6",
         "lucide-react-native": "^0.540.0",

@@ -1,5 +1,4 @@
 // This is a mocked auth service to demo login/signup flows.
-// Replace with actual network calls to your backend (use api.request).
 
 const MOCK_USER = {
   email: 'test@example.com',
@@ -8,6 +7,27 @@ const MOCK_USER = {
 };
 
 export default {
+  sendOtp: async (phone) => {
+    // simulate backend
+    await new Promise((r) => setTimeout(r, 800));
+
+    if (phone.length >= 10) {
+      return { success: true, message: "OTP sent successfully" };
+    }
+    throw new Error("Invalid phone number");
+  },
+
+  verifyOtp: async (phone, otp) => {
+    await new Promise((r) => setTimeout(r, 800));
+
+    // replace this logic when your backend is ready
+    if (otp === "1234") {
+      return { token: "fake-jwt-phone-token-999" };
+    }
+
+    throw new Error("Invalid OTP");
+  },
+
   login: async (email, password) => {
     // Simulate network delay
     await new Promise((r) => setTimeout(r, 800));

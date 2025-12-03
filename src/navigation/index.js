@@ -21,6 +21,12 @@ import AccountSettingsScreen from '../screens/AccountSettingsScreen';
 import FAQScreen from '../screens/FAQScreen';
 import PolicyScreen from '../screens/PolicyScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import VerificationStatusScreen from '../screens/documents/VerificationStatusScreen';
+import DocumentVerificationScreen from '../screens/documents/DocumentVerificationScreen';
+import SetupProfileScreen from '../screens/documents/SetupProfileScreen';
+import VehicleDetailsScreen from '../screens/documents/VehicleDetailsScreen';
+import UploadDocumentsScreen from '../screens/documents/UploadDocumentsScreen';
+import DocumentUploadScreen from '../screens/documents/DocumentUploadScreen';
 import ProductListingScreen from '../screens/ProductListingScreen';
 import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import SearchScreen from '../screens/SearchScreen';
@@ -92,10 +98,10 @@ function MainTabs() {
 function AuthStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="PhoneLogin" component={PhoneLoginScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
       <Stack.Screen name="OtpVerification" component={OtpVerificationScreen} />
+      {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
     </Stack.Navigator>
   );
 }
@@ -103,6 +109,13 @@ function AuthStack() {
 function MainAppStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="VerificationStatusScreen" component={VerificationStatusScreen} />
+      <Stack.Screen name="DocumentVerificationScreen" component={DocumentVerificationScreen} />
+      <Stack.Screen name="SetupProfileScreen" component={SetupProfileScreen} />
+      <Stack.Screen name="VehicleDetailsScreen" component={VehicleDetailsScreen} />
+      <Stack.Screen name="UploadDocumentsScreen" component={UploadDocumentsScreen} />
+      <Stack.Screen name="DocumentUploadScreen" component={DocumentUploadScreen} />
+
       <Stack.Screen name="MainTabs" component={MainTabs} />
 
       {/* Modal Screens */}
