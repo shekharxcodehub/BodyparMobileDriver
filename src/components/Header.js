@@ -1,52 +1,73 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Ionicons, AntDesign, FontAwesome } from "@expo/vector-icons";
+import { View, Text, Image, Switch } from "react-native";
+import React, { useState } from "react";
 import tw from "twrnc";
-import { colors } from "../theme/colors";
+import GlobalPopup from "./GlobalPopup";
 
-const Header = ({
-  navigation,
-  title,
-  showBack = false,
-  showSearch = false,
-  showCart = false,
-  cartCount
-}) => {
+export default function Header({ user, online, setOnline }) {
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [tempOnline, setTempOnline] = useState(online); // store previous value
+
+  const handleSwitchPress = () => {
+    // store current state before toggling
+    setTempOnline(online);
+
+    // open confirmation popup
+    setPopupVisible(true);
+  };
+
+  const handleConfirm = () => {
+    // User confirmed → toggle online/offline
+    setOnline(!online);
+    setPopupVisible(false);
+  };
+
+  const handleCancel = () => {
+    // User cancelled → revert switch
+    setOnline(tempOnline);
+    setPopupVisible(false);
+  };
+
   return (
-    <View style={tw`flex-row items-center justify-between px-4 py-4 border-b border-gray-200`}>
+    <View style={tw`bg-red-400 px-4 py-3 rounded-b-2xl flex-row items-center`}>
 
-      {/* Left Section */}
-      <View style={tw`flex-row items-center`}>
-        {showBack && (
-          <TouchableOpacity onPress={() => navigation.goBack()} style={tw`mr-3`}>
-            <Ionicons name="arrow-back" size={22} color="black" />
-          </TouchableOpacity>
-        )}
-        <Text style={tw`text-lg font-semibold`}>{title}</Text>
+      {/* Left Profile Image */}
+      <Image
+        source={{ uri: user?.image }}
+        style={tw`w-12 h-12 rounded-full mr-3`}
+      />
+
+      {/* Name + Location */}
+      <View style={tw`flex-1`}>
+        <Text style={tw`text-white text-base font-semibold`}>
+          Hello {user?.name}
+        </Text>
+        <Text style={tw`text-white text-xs opacity-80`}>
+          {user?.location}
+        </Text>
       </View>
 
-      {/* Right Section */}
+      {/* Online / Offline Switch */}
       <View style={tw`flex-row items-center`}>
-        {showSearch && (
-          <TouchableOpacity style={tw`mr-4`}>
-            <AntDesign name="search1" onPress={() => navigation.navigate("SearchScreen")} size={22} color="black" />
-          </TouchableOpacity>
-        )}
-        {showCart && (
-          <TouchableOpacity style={tw`relative`}>
-            <FontAwesome name="shopping-cart" onPress={() => navigation.navigate("CartScreen")} size={22} color="black" />
-            {cartCount > 0 && (
-              <View
-                style={tw`absolute -top-2 -right-2 bg-[${colors.primary}] rounded-full w-4 h-4 items-center justify-center`}
-              >
-                <Text style={tw`text-white text-[10px]`}>{cartCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        )}
+        <Text style={tw`text-white mr-2`}>
+          {online ? "Online" : "Offline"}
+        </Text>
+
+        <Switch
+          value={online}
+          onValueChange={handleSwitchPress} // Lock action behind popup
+          thumbColor="#fff"
+          trackColor={{ true: "#66ff99", false: "#ccc" }}
+        />
       </View>
+
+      {/* Global Popup */}
+      <GlobalPopup
+        visible={popupVisible}
+        title={online ? "Go Offline?" : "Go Online?"}
+        message={`Are you sure you want to switch ${online ? "offline" : "online"}?`}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      />
     </View>
   );
-};
-
-export default Header;
+}

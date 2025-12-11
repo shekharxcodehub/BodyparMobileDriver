@@ -54,17 +54,14 @@ function MainTabs() {
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
 
-          } else if (route.name === 'Wishlist') {
-            iconName = focused ? 'heart' : 'heart-outline';
-            IconComponent = Ionicons;
-
-          } else if (route.name === 'GetHelp') {
-            iconName = 'users';
-            IconComponent = Feather;
+          } else if (route.name === 'History') {
+            iconName = focused ? "time" : "time-outline";
 
           } else if (route.name === 'Orders') {
-            iconName = 'package';
-            IconComponent = Feather;
+            iconName = focused ? "list" : "list-outline";
+
+          } else if (route.name === 'Earning') {
+            iconName = focused ? "wallet" : "wallet-outline";
 
           } else if (route.name === 'Account') {
             iconName = focused ? 'person' : 'person-outline';
@@ -87,9 +84,9 @@ function MainTabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="Wishlist" component={WishlistScreen} options={{ title: 'Wishlist' }} />
-      <Tab.Screen name="GetHelp" component={GetHelpScreen} options={{ title: 'Get Help' }} />
+      <Tab.Screen name="History" component={WishlistScreen} options={{ title: 'History' }} />
       <Tab.Screen name="Orders" component={OrdersScreen} options={{ title: 'Orders' }} />
+      <Tab.Screen name="Earning" component={GetHelpScreen} options={{ title: 'Earning' }} />
       <Tab.Screen name="Account" component={AccountSettingsScreen} options={{ title: 'Account' }} />
     </Tab.Navigator>
   );
