@@ -28,7 +28,7 @@ export default function Header({ user, online, setOnline }) {
   };
 
   return (
-    <View style={tw`bg-red-400 px-4 py-3 rounded-b-2xl flex-row items-center`}>
+    <View style={tw`bg-red-400 px-4 py-3 flex-row items-center`}>
 
       {/* Left Profile Image */}
       <Image

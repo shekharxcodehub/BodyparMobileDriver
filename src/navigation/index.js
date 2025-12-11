@@ -12,6 +12,7 @@ import OtpVerificationScreen from '../screens/OtpVerificationScreen';
 
 // Main App Screens
 import HomeScreen from '../screens/HomeScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 import WishlistScreen from '../screens/WishlistScreen';
 import GetHelpScreen from '../screens/GetHelpScreen';
 import OrdersScreen from '../screens/OrdersScreen';
@@ -84,7 +85,7 @@ function MainTabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="History" component={WishlistScreen} options={{ title: 'History' }} />
+      <Tab.Screen name="History" component={HistoryScreen} options={{ title: 'History' }} />
       <Tab.Screen name="Orders" component={OrdersScreen} options={{ title: 'Orders' }} />
       <Tab.Screen name="Earning" component={GetHelpScreen} options={{ title: 'Earning' }} />
       <Tab.Screen name="Account" component={AccountSettingsScreen} options={{ title: 'Account' }} />
